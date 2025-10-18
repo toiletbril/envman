@@ -1,0 +1,117 @@
+#!/bin/bash
+
+# Environment manager. Environment is a bash/sh script that go into $ENV_DIR,
+# which may set environment variables, launch other shells and et cetera. Link
+# this file to /usr/local/bin :3c.
+
+set -e
+
+e_echo() {
+  echo "--- $* ---"
+}
+
+# Replace `exec` to preserve traps.
+e_exec() {
+  "$@"
+  exit $?
+}
+
+e_ls() {
+  test -z "$1" && return # title
+  test -z "$2" && return # dir
+  echo "$1" >&2
+  for E in "$2"/*; do
+    echo -n "  " >&2
+    basename "$E" >&2
+  done
+}
+
+e_ls_no_dirs() {
+  test -z "$1" && return # title
+  test -z "$2" && return # dir
+  echo "$1" >&2
+  for E in "$2"/*; do
+    test -d "$E" && continue
+    echo -n "  " >&2
+    basename "$E" >&2
+  done
+}
+
+# Script was not sourced. Launch a bash instance with the specified environment.
+if test "${BASH_SOURCE:-}" == "$0"; then
+  ENV_DIR="$(dirname "$(realpath "$0")")/env"
+
+  # Help message.
+  if test "$#" -lt 1; then
+    echo "USAGE" >&2
+    echo "  $(basename "$0") <environment file>" >&2
+    echo "  Environment manager." >&2
+    echo >&2
+    e_ls "ENVIROMENTS" "$ENV_DIR"
+    exit 0
+  fi
+
+  # Check if environment directory passed to us exists.
+  if test -e "$ENV_DIR/$1"; then
+    ENV="$ENV_DIR/$1"
+  elif test -e "$PWD/$1"; then
+    ENV="$1"
+  else
+    e_echo "'$1' is an invalid environment." >&2
+    echo >&2
+    e_ls "ENVIROMENTS" "$ENV_DIR"
+    exit 0
+  fi
+
+  # Is this a complex environment?
+  if test -d "$ENV"; then
+    if test -z "$2"; then
+      ENV_VAR=default
+    else
+      ENV_VAR="$ENV/$2"
+    fi
+
+    # Check if environment variation exists.
+    if ! test -f "$ENV_VAR"; then
+      e_echo "'$ENV_VAR' is an invalid $1 variation." >&2
+      echo >&2
+      e_ls_no_dirs "ENVIROMENT VARIATIONS" "$ENV"
+      exit 0
+    fi
+
+    # Drop into the new env directory.
+    ENV_DIR="$ENV"
+  else
+    ENV_VAR="$ENV"
+  fi
+
+  export ENV_DIR
+
+  # Let's go. Relaunch ourselves as a bash init file.
+  NO_FISH=1 ENV_FILE="$ENV_VAR" SENSITIVE_DIR="$ENV_DIR/.sensitive" \
+    bash --rcfile "$0" -i
+
+  exit $?
+fi
+
+set +x
+
+if test -z "$ENV_FILE"; then
+  e_echo "ERROR: do not source envman on the CLI!" >&2
+  exit 1
+fi
+
+# Script was sourced. Below are envronment helpers to be used in other scripts.
+test -f "$HOME/.bashrc" && . "$HOME/.bashrc"
+
+# Configure prompt.
+ENV_FILE_BASENAME="$(basename "$ENV_FILE")"
+PS1="($ENV_FILE_BASENAME) $PS1"
+
+trap "e_echo 'goodbye from envman!'" EXIT
+
+trap "e_echo 'envman was annihilated by a signal!'" INT TERM QUIT
+trap "e_echo 'envman was annihilated by an error!'" ERR
+
+echo "--- entering special environment! ---"
+. "$ENV_FILE"

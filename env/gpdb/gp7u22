@@ -1,0 +1,23 @@
+#!/bin/bash
+
+IMAGE_NAME="greenplum-7-ubuntu-22"
+CONTAINER_NAME="gpdb_7_u22_default"
+PORT_PREFIX="7"
+PORT_VARIATION="17"
+
+case "$(hostname)" in
+  'void')
+    SRC_DIR="$HOME/Work/Arenadata/src"
+    GPDB_SUBDIR="gpdb-7"
+  ;;
+  'fennec' | 'kitten')
+    SRC_DIR="$HOME/Work"
+    GPDB_SUBDIR="gpdb-7"
+  ;;
+  *)
+    echo "ERROR: unknown gpdb path!" >&2
+    exit 1
+  ;;
+esac
+
+source "$ENV_DIR/aux/image-base.sh"
