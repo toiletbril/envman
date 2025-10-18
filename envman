@@ -40,6 +40,7 @@ e_ls_no_dirs() {
 # Script was not sourced. Launch a bash instance with the specified environment.
 if test "${BASH_SOURCE:-}" == "$0"; then
   ENV_DIR="$(dirname "$(realpath "$0")")/env"
+  SENSITIVE_DIR="$(dirname "$(realpath "$0")")/.sensitive"
 
   # Help message.
   if test "$#" -lt 1; then
@@ -88,7 +89,7 @@ if test "${BASH_SOURCE:-}" == "$0"; then
   export ENV_DIR
 
   # Let's go. Relaunch ourselves as a bash init file.
-  NO_FISH=1 ENV_FILE="$ENV_VAR" SENSITIVE_DIR="$ENV_DIR/.sensitive" \
+  NO_FISH=1 ENV_FILE="$ENV_VAR" SENSITIVE_DIR="$SENSITIVE_DIR" \
     bash --rcfile "$0" -i
 
   exit $?
