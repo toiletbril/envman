@@ -13,6 +13,10 @@
 # Specify image name as BEAST_MODE if you want to recreate the container based
 # on commited image.
 if test -n "${BEAST_MODE:-}"; then
+  if test "$BEAST_MODE" == "$CONTAINER_NAME"; then
+    e_echo '$BEAST_MODE should be image name, not container name!'
+    exit 1
+  fi
   e_echo 'replacing the container based on $BEAST_MODE image.'
   IMAGE_NAME="$BEAST_MODE"
   docker rm -f "$CONTAINER_NAME"
@@ -60,7 +64,7 @@ if ! docker container inspect "$CONTAINER_NAME" > /dev/null 2>&1; then
     -v "$SRC_DIR:/home/gpadmin/host-sources:rw" \
     -v "$SRC_DIR/$GPDB_SUBDIR:/home/gpadmin/gpdb_src:rw" \
     -v "$SRC_DIR/$GPDB_SUBDIR/src/test:/home/gpadmin/gpdb_src/src/test:rw" \
-    -v "$AUX_DIROME/.tmux.conf:/etc/tmux.conf:rw" \
+    -v "$HOME/.tmux.conf:/etc/tmux.conf:rw" \
     -p "127.0.0.1:${PV}000-${PV}100:${P}000-${P}100" \
     -h "$CONTAINER_NAME" --name "$CONTAINER_NAME" "$IMAGE_NAME"
 
