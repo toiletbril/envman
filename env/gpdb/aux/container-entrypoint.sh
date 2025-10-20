@@ -6,6 +6,19 @@ set -eux -o pipefail
 
 H="/home/gpadmin"
 
+# recover ssh!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+rm -rf "$H/.ssh"
+mkdir -p "$H/.ssh"
+ssh-keygen -t rsa -N "" -f "$H/.ssh/id_rsa"
+cat "$H/.ssh/id_rsa.pub" >> "$H/.ssh/authorized_keys"
+chmod 0600 "$H/.ssh/authorized_keys"
+cat <<EOF >> "$H/.ssh/config"
+Host *
+  UseRoaming no
+EOF
+chown -R "gpadmin" "$H/.ssh"
+sudo '/sbin/sshd'
+
 # Start a permanent lldb platform server.
 #
 # (lldb) platform select remote linux
