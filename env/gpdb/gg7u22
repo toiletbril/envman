@@ -1,18 +1,18 @@
 #!/bin/env envman
 
-IMAGE_NAME="greengage-6-ubuntu-22"
-CONTAINER_NAME="ggdb_6_u22_default"
-PORT_PREFIX="6"
-PORT_VARIATION="26"
+IMAGE_NAME="greengage-7-ubuntu-22"
+CONTAINER_NAME="ggdb_7_u22_default"
+PORT_PREFIX="7"
+PORT_VARIATION="27"
 
 case "$(hostname)" in
   'void')
     SRC_DIR="$HOME/Work/Arenadata/src"
-    GPDB_SUBDIR="greengage"
+    GPDB_SUBDIR="greengage-7"
   ;;
   'fennec' | 'kitten')
-    SRC_DIR="$HOME/Work/"
-    GPDB_SUBDIR="greengage"
+    SRC_DIR="$HOME/Work"
+    GPDB_SUBDIR="greengage-7"
   ;;
   *)
     echo "ERROR: unknown gpdb path!" >&2

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/env envman
 
 IMAGE_NAME="greenplum-7-ubuntu-22"
 CONTAINER_NAME="gpdb_7_u22_default"

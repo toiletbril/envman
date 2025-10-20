@@ -67,7 +67,7 @@ if test "${BASH_SOURCE:-}" == "$0"; then
   # Is this a complex environment?
   if test -d "$ENV"; then
     if test -z "$2"; then
-      ENV_VAR=default
+      ENV_VAR="$ENV/default"
     else
       ENV_VAR="$ENV/$2"
     fi
@@ -81,6 +81,7 @@ if test "${BASH_SOURCE:-}" == "$0"; then
     fi
 
     # Drop into the new env directory.
+    ENV_COMPLEX="$ENV_DIR"
     ENV_DIR="$ENV"
   else
     ENV_VAR="$ENV"
@@ -89,8 +90,11 @@ if test "${BASH_SOURCE:-}" == "$0"; then
   export ENV_DIR
 
   # Let's go. Relaunch ourselves as a bash init file.
-  NO_FISH=1 ENV_FILE="$ENV_VAR" SENSITIVE_DIR="$SENSITIVE_DIR" \
-    bash --rcfile "$0" -i
+  NO_FISH=1 \
+  ENV_FILE="$ENV_VAR" \
+  ENV_COMPLEX="$ENV_COMPLEX" \
+  SENSITIVE_DIR="$SENSITIVE_DIR" \
+  bash --rcfile "$0" -i
 
   exit $?
 fi
@@ -106,8 +110,14 @@ fi
 test -f "$HOME/.bashrc" && . "$HOME/.bashrc"
 
 # Configure prompt.
-ENV_FILE_BASENAME="$(basename "$ENV_FILE")"
-PS1="($ENV_FILE_BASENAME) $PS1"
+if test -z "$ENV_IS_COMPLEX"; then
+  B="$(basename "$ENV_FILE")"
+  D="$(dirname "$ENV_FILE")"
+  PS1="($D/$B) $PS1"
+else
+  B="$(basename "$ENV_FILE")"
+  PS1="($B) $PS1"
+fi
 
 trap "e_echo 'goodbye from envman!'" EXIT
 
