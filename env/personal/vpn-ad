@@ -1,3 +1,4 @@
-#!/bin/bash
+#!/bin/env envman
+
 C="$SENSITIVE_DIR/ad.ovpn"
 e_exec sudo openvpn "$C"

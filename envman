@@ -1,8 +1,9 @@
 #!/bin/bash
 
 # Environment manager. Environment is a bash/sh script that go into $ENV_DIR,
-# which may set environment variables, launch other shells and et cetera. Link
-# this file to /usr/local/bin :3c.
+# which may set environment variables, launch other shells and et cetera.
+
+# You should link this file to /usr/local/bin immediately.
 
 set -e
 
@@ -45,8 +46,8 @@ if test "${BASH_SOURCE:-}" == "$0"; then
   # Help message.
   if test "$#" -lt 1; then
     echo "USAGE" >&2
-    echo "  $(basename "$0") <environment file>" >&2
-    echo "  Environment manager." >&2
+    echo "  $(basename "$0") <environment> [variation]" >&2
+    echo "  Environment manager for gigachads." >&2
     echo >&2
     e_ls "ENVIROMENTS" "$ENV_DIR"
     exit 0
