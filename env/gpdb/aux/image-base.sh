@@ -10,6 +10,8 @@
 # SRC_DIR - directory that contains components you'd like to move inside the container.
 # GPDB_SUBDIR - directory under SRC_DIR that contains GPDB source code.
 
+# Also, cgroups v1 need to be used instead of unified hierarchy or cgroups v2.
+
 # Specify image name as BEAST_MODE if you want to recreate the container based
 # on commited image.
 if test -n "${BEAST_MODE:-}"; then
@@ -54,6 +56,9 @@ SETUP_CMD="$(cat "$AUX_DIR/image-setup.sh")"
 if ! docker container inspect "$CONTAINER_NAME" > /dev/null 2>&1; then
   P="$PORT_PREFIX"
   PV="$PORT_VARIATION"
+
+  # Notice the explicit /src/test re-mount. The original docker image has it as
+  # an external volume, which will not be bounded on the host by default.
 
   docker run -it --privileged -d \
     --sysctl 'kernel.sem=500 1024000 200 4096' \

@@ -19,7 +19,8 @@ chown gpadmin:gpadmin /sys/fs/cgroup/{memory,cpu,cpuset}/gpdb/*
 mkdir -p '/usr/local/greenplum-db-devel'
 chown -R gpadmin:gpadmin '/usr/local/greenplum-db-devel'
 
-# whatever retard created docker I hate you
+# ~~whatever retard created docker I hate you~~
+# Set up default mirrors.
 cat <<EOF > '/etc/apt/sources.list'
 deb http://archive.ubuntu.com/ubuntu/ jammy main restricted universe multiverse
 deb http://archive.ubuntu.com/ubuntu/ jammy-updates main restricted universe multiverse
@@ -29,7 +30,9 @@ deb http://archive.canonical.com/ubuntu/ jammy partner
 EOF
 
 apt update
-apt install -y tmux gdb gdbserver vim lldb-15 mold
+apt install -y tmux gdb gdbserver vim lldb-15 mold ccache
+
+# Set up Ccache, Golang
 
 G='go1.21.3.linux-amd64.tar.gz'
 wget -q "https://go.dev/dl/$G"
@@ -38,7 +41,7 @@ rm "$G"
 
 cat <<EOF >> '/home/gpadmin/.bashrc'
 GOPATH='/usr/local/go'
-PATH="\$GOPATH/bin:\$PATH"
+PATH="/usr/lib/ccache:\$GOPATH/bin:\$PATH"
 EOF
 
 C="$H/container-scripts"
