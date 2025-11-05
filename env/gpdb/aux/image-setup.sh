@@ -34,14 +34,15 @@ apt install -y tmux gdb gdbserver vim lldb-15 mold ccache
 
 # Set up Ccache, Golang
 
-G='go1.21.3.linux-amd64.tar.gz'
+G='go1.25.3.linux-amd64.tar.gz'
 wget -q "https://go.dev/dl/$G"
 tar -C '/usr/local' -xzf "$G"
 rm "$G"
+chown -R gpadmin:gpadmin '/usr/local/go'
 
 cat <<EOF >> '/home/gpadmin/.bashrc'
-GOPATH='/usr/local/go'
-PATH="/usr/lib/ccache:\$GOPATH/bin:\$PATH"
+export GOPATH='/usr/local/go'
+export PATH="/usr/lib/ccache:\$GOPATH/bin:\$PATH"
 EOF
 
 C="$H/container-scripts"
