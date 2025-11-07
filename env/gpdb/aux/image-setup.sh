@@ -41,8 +41,9 @@ rm "$G"
 chown -R gpadmin:gpadmin '/usr/local/go'
 
 cat <<EOF >> '/home/gpadmin/.bashrc'
-export GOPATH='/usr/local/go'
-export PATH="/usr/lib/ccache:\$GOPATH/bin:\$PATH"
+export GOPATH='/home/gpadmin/.go'
+export GOROOT='/usr/local/go'
+export PATH="/usr/lib/ccache:\$GOROOT/bin:\$PATH"
 EOF
 
 C="$H/container-scripts"
