@@ -14,7 +14,7 @@ tmux send-keys -t "$SESSION_NAME:2" 'cd gpdb_src' Enter
 
 tmux new-window -t "$SESSION_NAME"
 tmux send-keys -t "$SESSION_NAME:3" 'su gpadmin' Enter
-tmux send-keys -t "$SESSION_NAME:3" '~/setup-resgroups' Enter
+tmux send-keys -t "$SESSION_NAME:3" '~/setup-cgroups' Enter
 tmux send-keys -t "$SESSION_NAME:3" '. ~/env' Enter
 
 tmux select-window -t "$SESSION_NAME:1"
