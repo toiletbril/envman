@@ -12,6 +12,14 @@
 
 # Also, cgroups v1 need to be used instead of unified hierarchy or cgroups v2.
 
+# Override basic variables.
+if test -z "${OVERRIDE_CONTAINER_NAME:-}"; then
+  CONTAINER_NAME="$OVERRIDE_CONTAINER_NAME"
+fi
+if test -z "${OVERRIDE_PORT_VARIATION:-}"; then
+  PORT_VARIATION="$OVERRIDE_PORT_VARIATION"
+fi
+
 # Specify image name as BEAST_MODE if you want to recreate the container based
 # on commited image.
 if test -n "${BEAST_MODE:-}"; then
