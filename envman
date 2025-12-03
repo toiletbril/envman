@@ -95,6 +95,7 @@ if test "${BASH_SOURCE:-}" == "$0"; then
   ENV_FILE="$ENV_VAR" \
   ENV_COMPLEX="$ENV_COMPLEX" \
   SENSITIVE_DIR="$SENSITIVE_DIR" \
+  DEBUG="$DEBUG" \
   bash --rcfile "$0" -i
 
   exit $?
@@ -126,4 +127,7 @@ trap "e_echo 'envman was annihilated by a signal!'" INT TERM QUIT
 trap "e_echo 'envman was annihilated by an error!'" ERR
 
 echo "--- entering special environment! ---"
+
+test -n "$DEBUG" && set -x
+
 . "$ENV_FILE"
