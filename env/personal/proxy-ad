@@ -23,8 +23,18 @@ A="$(cat "$SENSITIVE_DIR/ad_resolv.conf")"
 docker exec "$C" sh -c "echo '$A' > /etc/resolv.conf"
 
 echo "Started the proxy on 127.0.0.1:$PORT."
+echo "$C"
 
-bash -c 'sleep inf' || true
-docker rm -f "$C"
+# Die if container stops.
+bash <<EOF || true
+while test "\$(docker inspect "$C" --format='{{.State.Running}}' 2>/dev/null)" == 'true'; do
+  sleep 10
+done
+EOF
+
+# XXX output logs?
+
+e_echo 'container is dead. exiting!' >&2
+docker rm -f "$C" > /dev/null 2>&1
 
 exit
