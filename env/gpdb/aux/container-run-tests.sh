@@ -26,7 +26,7 @@ case "$SUITE" in
     DB_NAME='isolation2resgrouptest'
   ;;
   'resgroup')
-    DIR='/home/gpadmin/gpdb_src/src/test/'
+    DIR='/home/gpadmin/gpdb_src/src/test/isolation2'
     RUNNER='pg_isolation2_regress'
     INIT_FILE='./init_file_resgroup'
     DB_NAME='isolation2test'
