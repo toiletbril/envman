@@ -30,7 +30,7 @@ deb http://archive.canonical.com/ubuntu/ jammy partner
 EOF
 
 apt update
-apt install -y tmux gdb gdbserver vim lldb-15 mold ccache
+apt install -y meson liblz4-dev tmux gdb gdbserver vim lldb-15 mold ccache
 
 # Set up Ccache, Golang
 
