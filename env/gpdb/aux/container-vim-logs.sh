@@ -3,11 +3,18 @@
 set -ue
 
 if test $# -lt 1; then
-  echo "$0 <content id> [p/m]"
+  echo "$0 <content id/admin> [p/m]"
+  echo 'view gpdb pg_log directory corresponding to segment id.'
+  echo '"admin" opens gpAdminLogs/.'
   exit 1
 fi
 
 CID="$1"
+if test "$CID" = 'admin'; then
+  vim '/home/gpadmin/gpAdminLogs'
+  exit 0
+fi
+
 M="${2:-'p'}"
 
 case "$M" in
