@@ -1,6 +1,7 @@
 #!/bin/env envman
 
-PORT=2090
+IP='127.0.0.1'
+PORT='2090'
 IMAGE='jonoh/openvpn-proxy:latest'
 
 C=$(docker run --rm -d \
@@ -10,7 +11,7 @@ C=$(docker run --rm -d \
       --cap-add='NET_ADMIN' \
       -v "$SENSITIVE_DIR/ad.ovpn:/config/config.ovpn:ro" \
       -v '/dev/net/tun:/dev/net/tun' \
-      -p "127.0.0.1:$PORT:$PORT" \
+      -p "$IP:$PORT:$PORT" \
       "$IMAGE")
 
 # If script dies by an error, you should manually clean up the container :shrug:
@@ -22,7 +23,7 @@ sleep $S
 A="$(cat "$SENSITIVE_DIR/ad_resolv.conf")"
 docker exec "$C" sh -c "echo '$A' > /etc/resolv.conf"
 
-echo "Started the proxy on 127.0.0.1:$PORT."
+echo "Started the proxy on $IP:$PORT."
 echo "$C"
 
 # Die if container stops.
