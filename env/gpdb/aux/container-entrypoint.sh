@@ -27,6 +27,7 @@ sudo '/sbin/sshd'
   while :; do lldb-server-15 p --server --listen '*:7777' --gdbserver-port='7778' > /dev/null 2>&1; done
 ) & disown %1
 
+export PKG_CONFIG_PATH='/usr/local/greenplum-db-devel/lib/pkgconfig/'
 export PGDATABASE='postgres'
 export PATH="/usr/lib/ccache:$PATH"
 export CCACHE_DIR='/public/ccache'

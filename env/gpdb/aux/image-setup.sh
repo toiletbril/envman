@@ -9,8 +9,11 @@ git config --global --add safe.directory '*'
 H='/home/gpadmin'
 cd "$H" || exit 1
 
+# Some dumb images error here. Edit manually if something goes wrong! - your truly.
+set +e
 source './gpdb_src/concourse/scripts/common.bash'
 './gpdb_src/concourse/scripts/setup_gpadmin_user.bash' 'ubuntu22'
+set -e
 
 install -o gpadmin -g gpadmin -m700 -d /sys/fs/cgroup/{memory,cpu,cpuset}/gpdb
 chmod 600 /sys/fs/cgroup/{memory,cpu,cpuset}/gpdb/*
