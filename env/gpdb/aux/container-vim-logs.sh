@@ -4,7 +4,7 @@ set -ue
 
 if test $# -lt 1; then
   echo "$0 <content id/admin> [p/m]"
-  echo 'view gpdb pg_log directory corresponding to segment id.'
+  echo 'view gpdb segment directory corresponding to segment id.'
   echo '"admin" opens gpAdminLogs/.'
   exit 1
 fi
@@ -35,4 +35,4 @@ else
   DIR="dbfast$CID/demoDataDir$((CID-1))"
 fi
 
-vim "$MASTER_DATA_DIRECTORY/../../$DIR/pg_log"
+vim "$MASTER_DATA_DIRECTORY/../../$DIR/"
