@@ -10,7 +10,7 @@ case "$(hostname)" in
     SRC_DIR="$HOME/Work/Arenadata/src"
     GPDB_SUBDIR="gpdb"
   ;;
-  'fennec' | 'kitten')
+  'fennec' | 'kitten' | 'catfish')
     SRC_DIR="$HOME/Work"
     GPDB_SUBDIR="gpdb"
   ;;
