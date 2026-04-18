@@ -130,4 +130,9 @@ echo "--- entering special environment! ---"
 
 test -n "$DEBUG" && set -x
 
+if test `docker --version 2>&1 | cut -d' ' -f1` == 'podman'; then
+  e_echo 'podman is not supported! please use docker'
+  exit 1
+fi
+
 . "$ENV_FILE"
