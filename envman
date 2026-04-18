@@ -17,6 +17,14 @@ e_exec() {
   exit $?
 }
 
+e_podman_or_docker() {
+  if which podman >'/dev/null' 2>&1; then
+    podman "$@"
+  else
+    docker "$@"
+  fi
+}
+
 e_ls() {
   test -z "$1" && return # title
   test -z "$2" && return # dir
