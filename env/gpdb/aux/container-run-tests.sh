@@ -23,13 +23,13 @@ case "$SUITE" in
     DIR='/home/gpadmin/gpdb_src/src/test/isolation2'
     RUNNER='pg_isolation2_regress'
     INIT_FILE='./init_file_isolation2'
-    DB_NAME='isolation2resgrouptest'
+    DB_NAME='isolation2test'
   ;;
   'resgroup')
     DIR='/home/gpadmin/gpdb_src/src/test/isolation2'
     RUNNER='pg_isolation2_regress'
     INIT_FILE='./init_file_resgroup'
-    DB_NAME='isolation2test'
+    DB_NAME='isolation2resgrouptest'
   ;;
   'regress')
     DIR='/home/gpadmin/gpdb_src/src/test/regress'
