@@ -2,7 +2,7 @@
 
 IP='127.0.0.1'
 PORT='2090'
-IMAGE='jonoh/openvpn-proxy:latest'
+IMAGE='docker.io/jonoh/openvpn-proxy:latest'
 
 C=$(e_podman_or_docker run --rm -d \
       -e 'OPENVPN_TUNNEL_HOSTS=*.adsw.io,adsw.io' \
@@ -21,21 +21,19 @@ echo "Waiting $S seconds..."
 sleep $S
 
 A="$(cat "$SENSITIVE_DIR/ad_resolv.conf")"
-docker exec "$C" sh -c "echo '$A' > /etc/resolv.conf"
+e_podman_or_docker exec "$C" sh -c "echo '$A' > /etc/resolv.conf"
 
 echo "Started the proxy on $IP:$PORT."
 echo "$C"
 
 # Die if container stops.
-bash <<EOF || true
-while test "\$(docker inspect "$C" --format='{{.State.Running}}' 2>/dev/null)" == 'true'; do
-  sleep 10
+while test "$(e_podman_or_docker inspect "$C" --format='{{.State.Running}}' 2>/dev/null)" == 'true'; do
+  bash -c 'sleep 10' || e_podman_or_docker stop -t 0 "$C" > /dev/null 2>&1
 done
-EOF
 
 # XXX output logs?
 
 e_echo 'container is dead. exiting!' >&2
-docker rm -f "$C" > /dev/null 2>&1
+e_podman_or_docker rm -f "$C" > /dev/null 2>&1
 
 exit
