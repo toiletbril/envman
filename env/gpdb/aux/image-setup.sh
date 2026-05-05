@@ -33,7 +33,9 @@ deb http://archive.canonical.com/ubuntu/ jammy partner
 EOF
 
 apt update
-apt install -y meson liblz4-dev tmux gdb gdbserver vim lldb-15 mold ccache
+apt install -y meson liblz4-dev tmux gdb gdbserver vim lldb-15 mold ccache \
+               psmisc python3-future
+python2 -m pip install future
 
 # Set up Ccache, Golang
 
