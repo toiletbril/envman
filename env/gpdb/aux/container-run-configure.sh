@@ -11,7 +11,10 @@ export CFLAGS="$CFLAGS"
 export CXXFLAGS="$CFLAGS"
 export LDFLAGS='-Wl,--enable-new-dtags -Wl,--export-dynamic'
 
-V="$(cut -b 1 < VERSION)"
+if test -z "$V"; then
+  echo 'No version in $V specified.' >&2
+  exit 1
+fi
 
 case $V in
 '6')

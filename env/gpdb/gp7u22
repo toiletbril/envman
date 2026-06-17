@@ -12,7 +12,7 @@ case "$(hostname)" in
   ;;
   'fennec' | 'kitten' | 'catfish')
     SRC_DIR="$HOME/Work"
-    GPDB_SUBDIR="gpdb-7"
+    GPDB_SUBDIR="greenplum-7"
   ;;
   *)
     echo "ERROR: unknown gpdb path!" >&2
