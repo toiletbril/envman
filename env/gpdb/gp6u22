@@ -1,4 +1,5 @@
 #!/bin/env envman
+# vi: ft=bash
 
 IMAGE_NAME="greenplum-6-ubuntu-22"
 CONTAINER_NAME="gpdb_6_u22_default"
@@ -15,8 +16,11 @@ case "$(hostname)" in
     GPDB_SUBDIR="greenplum"
   ;;
   *)
-    echo "ERROR: unknown gpdb path!" >&2
-    exit 1
+    if test -z "$SRC_DIR" -o -z "$GPDB_SUBDIR"
+    then
+      echo "ERROR: unknown gpdb path!" >&2
+      exit 1
+    fi
   ;;
 esac
 

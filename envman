@@ -1,4 +1,5 @@
 #!/bin/bash
+# vi: ft=bash
 
 # Environment manager. Environment is a bash/sh script that go into $ENV_DIR,
 # which may set environment variables, launch other shells and et cetera.
@@ -120,7 +121,7 @@ fi
 test -f "$HOME/.bashrc" && . "$HOME/.bashrc"
 
 # Configure prompt.
-if test -z "$ENV_IS_COMPLEX"; then
+if test -z "$ENV_COMPLEX"; then
   B="$(basename "$ENV_FILE")"
   D="$(dirname "$ENV_FILE")"
   PS1="($D/$B) $PS1"

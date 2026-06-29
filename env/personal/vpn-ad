@@ -1,4 +1,5 @@
 #!/bin/env envman
+# vi: ft=bash
 
 C="$SENSITIVE_DIR/ad.ovpn"
 e_exec sudo openvpn "$C"
