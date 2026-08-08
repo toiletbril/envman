@@ -25,11 +25,11 @@ chown -R gpadmin:gpadmin '/usr/local/greenplum-db-devel'
 # ~~whatever retard created docker I hate you~~
 # Set up default mirrors.
 cat <<EOF > '/etc/apt/sources.list'
-deb http://archive.ubuntu.com/ubuntu/ jammy main restricted universe multiverse
-deb http://archive.ubuntu.com/ubuntu/ jammy-updates main restricted universe multiverse
-deb http://archive.ubuntu.com/ubuntu/ jammy-security main restricted universe multiverse
-deb http://archive.ubuntu.com/ubuntu/ jammy-backports main restricted universe multiverse
-deb http://archive.canonical.com/ubuntu/ jammy partner
+deb https://mirror.truenetwork.ru/ubuntu/ jammy main restricted universe multiverse
+deb https://mirror.truenetwork.ru/ubuntu/ jammy-updates main restricted universe multiverse
+deb https://mirror.truenetwork.ru/ubuntu/ jammy-security main restricted universe multiverse
+deb https://mirror.truenetwork.ru/ubuntu/ jammy-backports main restricted universe multiverse
+deb https://mirror.truenetwork.ru/ubuntu/ jammy partner
 EOF
 
 apt update

@@ -75,7 +75,7 @@ if ! docker container inspect "$CONTAINER_NAME" > /dev/null 2>&1; then
     --sysctl 'kernel.sem=500 1024000 200 4096' \
     --sysctl 'net.unix.max_dgram_qlen=4096' \
     --cgroupns=host \
-    -v "/public:/public:rw" \
+    -v "$HOME/Public:/public:rw" \
     -v "$AUX_DIR/:/home/gpadmin/container-scripts:rw" \
     -v "$SRC_DIR:/home/gpadmin/host-sources:rw" \
     -v "$SRC_DIR/$GPDB_SUBDIR:/home/gpadmin/gpdb_src:rw" \
